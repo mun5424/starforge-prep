@@ -7,6 +7,10 @@ Given a set of coins, determine
 
 """
 
+# find the number of unique ways it can reach a sum n
+import sys
+
+
 def coinChangeWays(coins, n): 
     # dynamic programming approach 
     # this assumes that its possible to have multiple uses of the same coin
@@ -25,5 +29,39 @@ def coinChangeWays(coins, n):
             dp[j] += dp[j - coins[i]]     
         return dp[n] 
 
+
+
+# find minimum number of coins to reach a target n given a set of coins
+# take 1. Greedy Approach 
+def greedyMinCoins(coins, target):
+    # greedy approach, this doesnt actually give you the min number of coins sometimes 
+    coins.sort()
+    count = 0 
+    for i in range(len(coins), -1, -1):
+        while target > coins[i]:
+            target -= coins[i]
+            count += 1 
+
+    return count 
+
+
+
+def minCoins(coins, target): 
+    # dynamic programming approach
+    dp = [sys.maxsize] * (target+1) 
+    dp[0] = 0
+
+    for i in range(1, target+1):
+        for c in range(0, len(coins)):
+            if coins[c] <= i: 
+                currCount = dp[i - coins[c]]
+                if currCount != sys.maxsize and currCount + 1 < dp[i]:
+                    dp[i] = currCount + 1
+
+    return dp[target] 
+
+print(minCoins([25, 10, 5], 30)) # 2 
+print(minCoins([9,6,5,1], 13)) # 3 
+print(minCoins([1,3,5,7], 18)) # 4 
 
 
