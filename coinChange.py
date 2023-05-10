@@ -13,8 +13,8 @@ import sys
 
 def coinChangeWays(coins, n): 
     # dynamic programming approach 
-    # this assumes that its possible to have multiple uses of the same coin
     
+    # this assumes that its possible to have multiple uses of the same coin
     # dp array is +1 because we have a 0 base case
     dp = [0] * (n+1) 
 
@@ -28,7 +28,6 @@ def coinChangeWays(coins, n):
         for j in range(coins[i], n+1): 
             dp[j] += dp[j - coins[i]]     
         return dp[n] 
-
 
 
 # find minimum number of coins to reach a target n given a set of coins
@@ -46,8 +45,8 @@ def greedyMinCoins(coins, target):
 
 
 # find minimum number of coins to reach a target n given a set of coins
+# take 2. dynamic programming approach
 def minCoins(coins, target): 
-    # dynamic programming approach
     dp = [sys.maxsize] * (target+1) 
     dp[0] = 0
 
