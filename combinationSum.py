@@ -46,3 +46,27 @@ def combinationSum2(self, candidates: List[int], target: int) -> List[List[int]]
     
     dfs(0, [], 0)
     return res
+
+
+# find a combination of numbers that sums up to n such that 
+# Only numbers 1 through 9 are used.
+# Each number is used at most once.
+def combinationSum3(self, k: int, n: int) -> List[List[int]]:
+    res = [] 
+
+    nums = [1,2,3,4,5,6,7,8,9]
+
+    def dfs(idx, path, target, k):
+        if k < 0 or target < 0:
+            return
+
+        if k == 0 and target == 0: 
+            res.append(path)
+            return 
+
+
+        for i in range(idx, len(nums)):
+            dfs(i + 1, path +[nums[i]], target - nums[i], k - 1)
+    dfs(0, [], n, k) 
+
+    return res
