@@ -66,12 +66,17 @@ def firstSmallestPositiveInt_quickselect(nums):
     if not nums:
         return None
 
-    # flip all indexes of elements into negatives
+    # partition the list so that all positive elements are on the left
     positiveEnd = partitionOnPivot(nums)
+    print(nums) 
+    print(positiveEnd)
+
+    # flip all indexes of elements into negatives
     for i in range(positiveEnd):
         if abs(nums[i]) - 1 < positiveEnd and nums[abs(nums[i]) -1] > 0:
             nums[abs(nums[i]) - 1] *= -1 
-    
+    print(nums) 
+
     # the first positive element will be the missing integer
     for i in range(positiveEnd):
         if nums[i] > 0:
@@ -85,3 +90,44 @@ def firstSmallestPositiveInt_quickselect(nums):
 
 print(firstSmallestPositiveInt_quickselect([1,3,4])) # 2 
 print(firstSmallestPositiveInt_quickselect([-1, 0, 1, 1, 2, 4])) # 3 
+print(firstSmallestPositiveInt_quickselect([-3, 1, 2, 5, 9, -4, -5])) # 3 
+
+
+# this is how a quickselect would work, as reference
+def partition(nums, l, r, pIndex):
+    
+    pivot = nums[pIndex]
+    
+    nums[pIndex], nums[r] = nums[r], nums[pIndex]
+    pIndex = l 
+
+    for i in range(r + 1): 
+        if nums[i] <= pivot:
+            nums[i], nums[pIndex] = nums[pIndex], nums[i] 
+            pIndex += 1
+
+    return pIndex - 1
+
+
+def quickselect(nums, l, r, k):
+    if l == r:
+        return nums[l] 
+
+    # choose a pivot - there are a lot of functions on how to choose a pivot efficiently 
+    # but for sake of simplicity lets choose the rightmost element here
+    pIndex = r
+    pIndex = partition(nums, l, r, pIndex) 
+
+    if pIndex == k:
+        return nums[k] 
+    elif pIndex < k:
+        return quickselect(nums, pIndex+1, r, k) 
+    return quickselect(nums, l, pIndex-1, k) 
+
+
+def findKthLargest(nums, k):
+    return quickselect(nums, 0, len(nums)-1, len(nums)-k) 
+
+
+print(findKthLargest([5, 6, 1, 7, 9], 3)) # [1, 5, 6, 7, 9] 
+
