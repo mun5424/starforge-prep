@@ -50,6 +50,22 @@ def maxSum(arr, k):
         max_sum = max(window_sum, max_sum)
  
     return max_sum
- 
+
+
 
 print(maxSum([1, 4, 2, 10, 2, 3, 1, 0, 20], 4)) # 24
+
+
+
+# given an array of numbers, find the subarray with the largest sum
+
+def maxSum(nums):
+
+    maxSum = -999999
+    for i in range(0, len(nums)):
+        sumSoFar = max(nums[i], nums[i] + sumSoFar)
+        maxSum = max(sumSoFar, maxSum) 
+
+    return maxSum
+ 
+
