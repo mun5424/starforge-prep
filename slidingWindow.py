@@ -26,3 +26,30 @@ def lengthOfLongestSubstring(self, s: str) -> int:
 
 
 print(lengthOfLongestSubstring("abcdefaaebe"))
+
+
+# given an array of numbers, find the maximum sum of the consecutive k elements 
+
+def maxSum(arr, k):
+    n = len(arr)
+    
+    if n < k:
+        return None
+ 
+    # Compute sum of first window of size k
+    window_sum = sum(arr[:k])
+ 
+    # first sum available
+    max_sum = window_sum
+
+    # iterate through every element here, slide the window of k elements from left to right.
+    # check that the sum is greater than the current max sum. if yes, replace max_sum 
+
+    for i in range(n - k):
+        window_sum = window_sum - arr[i] + arr[i + k]
+        max_sum = max(window_sum, max_sum)
+ 
+    return max_sum
+ 
+
+print(maxSum([1, 4, 2, 10, 2, 3, 1, 0, 20], 4)) # 24
