@@ -25,7 +25,7 @@ def lengthOfLongestSubstring(self, s: str) -> int:
     return max(maxLength, j - i)
 
 
-print(lengthOfLongestSubstring("abcdefaaebe"))
+#print(lengthOfLongestSubstring("abcdefaaebe"))
 
 
 # given an array of numbers, find the maximum sum of the consecutive k elements 
@@ -62,10 +62,13 @@ print(maxSum([1, 4, 2, 10, 2, 3, 1, 0, 20], 4)) # 24
 def maxSum(nums):
 
     maxSum = -999999
+    sumSoFar = 0
     for i in range(0, len(nums)):
         sumSoFar = max(nums[i], nums[i] + sumSoFar)
         maxSum = max(sumSoFar, maxSum) 
 
     return maxSum
  
+
+print(maxSum([-2,1,-3,4,-1,2,1,-5,4])) # 6
 
