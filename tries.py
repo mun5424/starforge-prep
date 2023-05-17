@@ -9,7 +9,10 @@ boolean search(String word) Returns true if the string word is in the trie (i.e.
 boolean startsWith(String prefix) Returns true if there is a previously inserted string word that has the prefix prefix, and false otherwise.
 
 The Trie gets asked pretty often in an interview as it is extremely efficient when it comes to searching an index or a word.
-
+Tries are generally 
+insert - O(k)
+delete - O(k)
+Search - O(k) where k is length of the string queried 
 
 """
 class TrieNode:
@@ -48,3 +51,12 @@ class Trie:
                 return False
             curr = curr.children[w]
         return True
+
+
+trie = Trie() 
+
+trie.insert("jujutsu")
+trie.insert("kaizen")
+print(trie.search("kaizen")) # true
+print(trie.search("onepiece")) # false
+print(trie.startsWith("juju")) # true
