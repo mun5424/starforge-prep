@@ -12,6 +12,9 @@ from collections import defaultdict
 from typing import List
 
 
+# need to figure out the association between letters of each word and hash these.
+# fortunately, we can keep a list of differences between indices of ascii values in the format () i.e. (1,1,1) -> abc, cde
+# we can use a map to store them. Essentially hashing the values
 def groupStrings(strings: List[str]) -> List[List[str]]:
     groups = defaultdict(List) 
     for s in strings: 
@@ -21,3 +24,4 @@ def groupStrings(strings: List[str]) -> List[List[str]]:
         groups[pattern].append(s)
     
     return groups.values() 
+
