@@ -93,6 +93,34 @@ print(firstSmallestPositiveInt_quickselect([-1, 0, 1, 1, 2, 4])) # 3
 print(firstSmallestPositiveInt_quickselect([-3, 1, 2, 5, 9, -4, -5])) # 3 
 
 
+def firstMissingPositive(nums): 
+    n = len(nums) 
+
+    for i in range(n):
+        if nums[i] < 1 or nums[i] > n:
+            nums[i] = n + 1
+    
+    for i in range(n):
+        val = abs(nums[i]) 
+        if val > n: 
+            continue
+        if nums[val-1] > 0:
+            nums[val-1] *= -1
+        
+    print(nums)
+    for i in range(1, n):
+        if nums[i] >= 0:
+            return i + 1
+    return n + 1
+    
+
+
+print("first missing positive with no quickselect")
+print(firstMissingPositive([1,3,4])) # 2 
+print(firstMissingPositive([1,2,3,4])) # 5 
+print(firstMissingPositive([-1, 0, 1, 1, 2, 4])) # 3 
+
+
 # this is how a quickselect would work, as reference
 def partition(nums, l, r, pIndex):
     
