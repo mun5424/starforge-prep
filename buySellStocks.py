@@ -38,7 +38,7 @@ Find and return the maximum profit you can achieve.
 """
 
 
-def maxProfit(self, prices: List[int]) -> int:
+def maxProfit2(self, prices: List[int]) -> int:
     minsofar = 1000000
     totalmax = 0
     for i in range(1, len(prices)):
@@ -47,3 +47,5 @@ def maxProfit(self, prices: List[int]) -> int:
     
     return totalmax
         
+print(maxProfit2([7,1,5,3,6,4])) # 7 
+print(maxProfit2([1,2,3,4,5])) # 4
