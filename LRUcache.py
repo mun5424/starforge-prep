@@ -1,44 +1,64 @@
-"""
-implement an LRU cache. 
+class DLinkedNode:
+    def __init__(self): 
+        self.key = 0
+        self.value = 0
+        self.prev = None
+        self.next = None
 
-classic interview problem - should be able to explain how/why it works and also be able to explain the reasoning behind the data structure. 
+class LRUCache:
 
-"""
-
-# we need to use a doubly linked list with pointers to nodes stored in a hashmap. 
-# every time a node gets accessed we need to move that node to the head. Because of this reason, 
-# doubly linked lists are fit as they make easy additions to the head.
-# doubly linked lists have an inherent problem of linked lists in that they amortize to a linear time on search O(n) 
-# we reduce this by storing such pointer to a hashmap. 
-# by doing this, we achieve both O(1) retrieval as well as O(1) insert. 
-
-class LRU: 
-    class DLLNode: 
-        def __init__(self, val) -> None:
-            self.val = val 
-            self.prev = None
-            self.next = None 
-
-    def __init__(self) -> None:
-        self.capacity = 4
-        self.head = self.DLLNode(None)
-        self.tail = self.DLLNode(None)
+    def __init__(self, capacity: int):
+        self.capacity = capacity
+        self.head = DLinkedNode()
+        self.tail = DLinkedNode()
         self.head.next = self.tail
         self.tail.prev = self.head
         self.map = {}
-    
+        self.size = 0
 
-    # new node into the front of the queue
-    def _insert(self, val): 
-        newNode = self.DLLNode(val) 
-        newNode.next = self.head.next
-        self.head.next = newNode
-        if self.tail.prev == self.head: 
-            self.tail.prev = newNode
-        if not newNode in self.map:
-            self.map[newNode] = 1
-
-    def _delete(self, node): 
-        if self.head.next == self.tail:
-            # linkedlist is empty
+    def _insert(self, node): 
+        node.prev = self.head
+        node.next = self.head.next 
+        self.head.next.prev = node 
+        self.head.next = node 
     
+    def _remove(self, node): 
+        node.next.prev = node.prev 
+        node.prev.next = node.next
+
+    def _move_to_front(self, node):
+        self._remove(node)
+        self._insert(node) 
+
+    def _remove_tail(self):
+        res = self.tail.prev
+        self._remove(res) 
+        return res
+        
+
+    def get(self, key: int) -> int:
+        node = self.map.get(key, None)
+        if not node:
+            return -1
+        self._move_to_front(node) 
+        return node.value
+
+        
+
+    def put(self, key: int, value: int) -> None:
+
+        node = self.map.get(key)
+        if not node: 
+            node = DLinkedNode() 
+            node.key = key
+            node.value = value
+            self.map[key] = node
+            self._insert(node)
+            self.size +=1
+            if self.size > self.capacity: 
+                tail = self._remove_tail()
+                del self.map[tail.key]
+                self.size -= 1
+        else:
+            node.value = value 
+            self._move_to_front(node)
