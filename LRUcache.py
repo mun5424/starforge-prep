@@ -1,3 +1,18 @@
+"""
+implement an LRU cache. 
+
+classic interview problem - should be able to explain how/why it works and also be able to explain the reasoning behind the data structure. 
+
+"""
+
+# we need to use a doubly linked list with pointers to nodes stored in a hashmap. 
+# every time a node gets accessed we need to move that node to the head. Because of this reason, 
+# doubly linked lists are fit as they make easy additions to the head.
+# doubly linked lists have an inherent problem of linked lists in that they amortize to a linear time on search O(n) 
+# we reduce this by storing such pointer to a hashmap. 
+# by doing this, we achieve both O(1) retrieval as well as O(1) insert. 
+
+
 class DLinkedNode:
     def __init__(self): 
         self.key = 0
@@ -62,3 +77,14 @@ class LRUCache:
         else:
             node.value = value 
             self._move_to_front(node)
+    
+lrucache = LRUCache(2)
+lrucache.put(1, 1) # // cache is {1=1}
+lrucache.put(2, 2) # // cache is {1=1, 2=2}
+lrucache.get(1)    # // return 1
+lrucache.put(3, 3) # // LRU key was 2, evicts key 2, cache is {1=1, 3=3}
+lrucache.get(2)    # // returns -1 (not found)
+lrucache.put(4, 4) #  LRU key was 1, evicts key 1, cache is {4=4, 3=3}
+lrucache.get(1)    # return -1 (not found)
+lrucache.get(3)    # return 3
+lrucache.get(4)    # return 4
