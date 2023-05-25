@@ -11,4 +11,5 @@ class Logger:
         
         self.map[message] = [timestamp, timestamp + 10] 
         return True
-        
+
+
