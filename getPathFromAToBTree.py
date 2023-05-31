@@ -47,10 +47,10 @@ class Solution:
         
         return lca(root, p, q)
 
-    def getPath(self, root: 'TreeNode', arr: 'List', node: 'TreeNode') -> bool:
+    def getPath(self, root: 'TreeNode', arr: List, node: 'TreeNode') -> bool:
         if not root:
             return False
-        if root.val == node.val:
+        if root == node:
             return True
         arr.append("LEFT")
         if self.getPath(root.left, arr, node):
@@ -65,8 +65,8 @@ class Solution:
     def getPathFromAToB(self, root: 'TreeNode', p: 'TreeNode', q: 'TreeNode') -> List:
         lcAncestor = self.lowestCommonAncestor(root, p, q)
         startPath, destPath = [], [] 
-        self.getPath(lcAncestor, p, startPath) 
-        self.getPath(lcAncestor, q, destPath) 
+        self.getPath(lcAncestor, startPath, p) 
+        self.getPath(lcAncestor, destPath, q) 
         res = [] 
         for _ in startPath:
             res.append('UP') 
@@ -74,3 +74,19 @@ class Solution:
             res.append(s) 
         
         return res 
+
+
+
+root = TreeNode(1)
+root.left = TreeNode(2)
+root.right = TreeNode(3)
+startNode = TreeNode(4)
+root.left.left = startNode
+root.left.right = TreeNode(5)
+root.right.left = TreeNode(6)
+destNode = TreeNode(7)
+root.right.right = destNode
+
+
+solution = Solution()
+print( solution.getPathFromAToB(root, startNode, destNode)  )
