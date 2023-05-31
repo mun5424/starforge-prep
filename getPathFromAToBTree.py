@@ -19,6 +19,9 @@ from node 1 to node 11 would be:
 
 
 # Definition for a binary tree node.
+from typing import List
+
+
 class TreeNode:
     def __init__(self, x):
         self.val = x
@@ -43,3 +46,31 @@ class Solution:
             return left or right 
         
         return lca(root, p, q)
+
+    def getPath(self, root: 'TreeNode', arr: 'List', node: 'TreeNode') -> bool:
+        if not root:
+            return False
+        if root.val == node.val:
+            return True
+        arr.append("LEFT")
+        if self.getPath(root.left, arr, node):
+            return True
+        arr.pop()
+        arr.append("RIGHT")
+        if self.getPath(root.right, arr, node):
+            return True
+        arr.pop() 
+        return False 
+
+    def getPathFromAToB(self, root: 'TreeNode', p: 'TreeNode', q: 'TreeNode') -> List:
+        lcAncestor = self.lowestCommonAncestor(root, p, q)
+        startPath, destPath = [], [] 
+        self.getPath(lcAncestor, p, startPath) 
+        self.getPath(lcAncestor, q, destPath) 
+        res = [] 
+        for _ in startPath:
+            res.append('UP') 
+        for s in destPath: 
+            res.append(s) 
+        
+        return res 
