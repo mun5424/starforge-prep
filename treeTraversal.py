@@ -31,4 +31,32 @@ def postorder(root):
     postorder(root.left)
     postorder(root.right)
     print(root.val) 
+
+def postorderIterative(root): 
+    
+    if not root: 
+        return None
+
+    stack = []
+
+    while(True):
+        while(root):
+            if root.right is not None:
+                stack.append(root.right) 
+            stack.append(root) 
+
+            root = root.left
+        root = stack.pop()
+        if root.right is not None and stack[-1] == root.right:
+            stack.pop()
+            stack.append(root) 
+            root = root.right 
+        else:
+            print(root)
+            root = None
+        
+        if len(stack) <= 0:
+            break
+
+    
     
