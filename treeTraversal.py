@@ -1,3 +1,10 @@
+"""
+tree traversal - preorder, postorder, and inorder 
+For Inorder, you traverse from the left subtree to the root then to the right subtree.
+For Preorder, you traverse from the root to the left subtree then to the right subtree.
+For Post order, you traverse from the left subtree to the right subtree then to the root.
+"""
+
 class TreeNode:
     def __init__(self, val) -> None:
         self.val = val 
