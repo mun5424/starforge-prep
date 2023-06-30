@@ -26,4 +26,5 @@ class Solution:
         return res 
     
 
-
+solution = Solution()
+print(solution.lengthOfLongestSubstring('abcabcbb')) # 'abc'
